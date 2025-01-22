@@ -1,0 +1,57 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: databricks
+  title: Databricks
+  description: Create a space in Databricks to work in
+spec:
+  owner: user:guest
+  type: service
+
+  steps:
+    - id: read-file
+      name: Read File
+      action: debug:wait
+      input:
+        minutes: 1
+
+---
+
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: snowflake
+  title: Snowflake
+  description: Create a database in Snowflake to work in
+spec:
+  owner: user:guest
+  type: service
+
+  steps:
+    - id: read-file
+      name: Read File
+      action: debug:wait
+      input:
+        minutes: 1
+
+---
+
+apiVersion: scaffolder.backstage.io/v1beta3
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+kind: Template
+metadata:
+  name: de-workspace
+  title: Data Engineering team environment
+  description: Set up all services for a data engineering team to work in
+spec:
+  owner: user:guest
+  type: service
+
+  steps:
+    - id: read-file
+      name: Read File
+      action: debug:wait
+      input:
+        minutes: 1

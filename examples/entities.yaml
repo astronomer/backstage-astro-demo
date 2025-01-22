@@ -1,0 +1,56 @@
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-system
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: data-platform
+spec:
+  owner: platform
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: astro-platform-api
+  description: Astro Platform API
+spec:
+  type: openapi
+  lifecycle: beta
+  owner: platform
+  system: data-platform
+  definition:
+    $text: https://api.astronomer.io/spec/platform/v1beta1
+---
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: astro-iam-api
+  description: Astro IAM API
+spec:
+  type: openapi
+  lifecycle: beta
+  owner: platform
+  system: data-platform
+  definition:
+    $text: https://api.astronomer.io/spec/iam/v1beta1
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  description: Astro, SaaS application for managing Apache Airflow
+  name: astro
+  tags:
+    - airflow
+    - astro
+    - data-platform
+  links:
+    - url: https://www.astronomer.io/docs/astro
+      title: Astro Documentation
+      icon: techdocs
+      type: documentation
+spec:
+  type: service
+  lifecycle: experimental
+  owner: platform
+  system: data-platform
+  providesApis:
+    - astro-platform-api
+    - astro-iam-api

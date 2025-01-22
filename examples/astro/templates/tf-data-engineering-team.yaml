@@ -1,0 +1,8 @@
+name: "${{ values.name }}"
+deployments:
+  dev: ${{ values.deployments_dev }}
+  test: ${{ values.deployments_test }}
+  acc: ${{ values.deployments_acc }}
+  prod: ${{ values.deployments_prod }}
+critical: ${{ values.critical }}
+pointOfContact: "${{ values.pointOfContact }}"

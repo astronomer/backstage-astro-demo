@@ -1,0 +1,103 @@
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-template
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: astro-template
+  title: Astro
+  description: Astro, SaaS application for managing Apache Airflow
+spec:
+  owner: platform
+  type: service
+
+  # These parameters are used to generate the input form in the frontend,
+  # and are used to gather input data for the execution of the template.
+  # Input examples: https://backstage.io/docs/features/software-templates/input-examples
+  parameters:
+    - title: Environment details
+      required:
+        - name
+        - environments
+        - critical
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Name will be used for the Astro Workspace
+          ui:autofocus: true
+        environments:
+          title: Environments
+          description: Select the environments that you require
+          type: array
+          minItems: 1
+          items:
+            type: string
+            enum:
+              - 'Development'
+              - 'Test'
+              - 'Acceptance'
+              - 'Production'
+          uniqueItems: true
+          ui:widget: checkboxes
+        critical:
+          title: Is this service considered critical?
+          type: boolean
+          default: false
+          ui:widget: radio
+    - title: Contact details
+      required:
+        - pointOfContact
+      properties:
+        pointOfContact:
+          title: Point of contact
+          type: string
+          description: The point of contact for this environment, in case of issues or questions
+          ui:autofocus: true
+
+  steps:
+    # Backstage uses Nunjucks for templating: https://mozilla.github.io/nunjucks
+    - id: template
+      name: Render templates
+      action: fetch:template:file
+      input:
+        url: ./templates/tf-data-engineering-team.yaml
+        targetPath: './rendered/${{ parameters.name | trim | lower | replace(" ", "_") }}.yaml'
+        values:
+          name: ${{ parameters.name }}
+          deployments_dev: ${{ 'True' if 'Development' in parameters.environments else 'False' }}
+          deployments_test: ${{ 'True' if 'Test' in parameters.environments else 'False' }}
+          deployments_acc: ${{ 'True' if 'Acceptance' in parameters.environments else 'False' }}
+          deployments_prod: ${{ 'True' if 'Production' in parameters.environments else 'False' }}
+          critical: ${{ 'True' if parameters.critical else 'False' }}
+          pointOfContact: ${{ parameters.pointOfContact }}
+
+
+    - id: terraform_pr
+      name: Create Terraform PR
+      action: publish:github:pull-request
+      input:
+        repoUrl: github.com?organization=astronomer&repo=astronomer-data-platform-demo&owner=astronomer
+        branchName: 'setup-data-engineering-environment-${{ parameters.name | trim | lower | replace(" ", "_") }}'
+        title: '🔩 Setup data engineering environment for team ${{ parameters.name }}'
+        description: |
+          # Setup Data Engineering Environment for Team ${{ parameters.name }}
+
+          *Created by Backstage 👷‍♂️*
+        sourcePath: ./rendered
+        targetPath: 'config/data_engineering'
+
+    - id: label_pr
+      name: Add labels to PR
+      action: github:issues:label
+      input:
+        repoUrl: github.com?organization=astronomer&repo=astronomer-data-platform-demo&owner=astronomer
+        number: '${{ steps.terraform_pr.output.pullRequestNumber }}'
+        labels:
+          - terraform
+          - backstage
+
+  # Outputs are displayed to the user after a successful execution of the template.
+  output:
+    links:
+      - title: 'Terraform PR'
+        url: ${{ steps.terraform_pr.output.remoteUrl }}
+        icon: github

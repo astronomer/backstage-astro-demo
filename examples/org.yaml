@@ -1,0 +1,49 @@
+# https://backstage.io/docs/features/software-catalog/descriptor-format/#kind-group
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: platform
+  description: Platform team
+spec:
+  type: team
+  profile:
+    displayName: Platform team
+    email: platform@examplecorp.io
+    picture: https://api.dicebear.com/9.x/bottts/svg?seed=Vivian
+  children: []
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: bharenslak
+spec:
+  profile:
+    displayName: Bas Harenslak
+    email: bharenslak@examplecorp.io
+    picture: https://api.dicebear.com/9.x/bottts/svg?seed=Sara
+  memberOf: [platform]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: dduck
+spec:
+  profile:
+    displayName: Donald Duck
+    email: dduck@examplecorp.io
+    picture: https://static.vecteezy.com/system/resources/previews/022/026/266/non_2x/donald-duck-cartoon-free-vector.jpg
+  memberOf: [platform]
+---
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-user
+apiVersion: backstage.io/v1alpha1
+kind: User
+metadata:
+  name: mmouse
+spec:
+  profile:
+    displayName: Mickey Mouse
+    email: mmouse@examplecorp.io
+    picture: https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/e2ee9ad1-25b4-49d4-8d2b-461ca67d2e64/dhjgpgr-2dd56b4e-258a-4bcb-b2de-b52648952de5.png/v1/fill/w_755,h_768/cn_yes__now_then_icon_mickey_mouse_by_oonaturner15_dhjgpgr-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NzY4IiwicGF0aCI6IlwvZlwvZTJlZTlhZDEtMjViNC00OWQ0LThkMmItNDYxY2E2N2QyZTY0XC9kaGpncGdyLTJkZDU2YjRlLTI1OGEtNGJjYi1iMmRlLWI1MjY0ODk1MmRlNS5wbmciLCJ3aWR0aCI6Ijw9NzU1In1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.A7VBBdSSydvCo9n-EwhdDCV9CR5j-8Lm2eObcbJzp8w
+  memberOf: [platform]

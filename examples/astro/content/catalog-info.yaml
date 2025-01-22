@@ -1,0 +1,19 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  description: Astro, SaaS application for managing Apache Airflow
+  name: astro-${{ values.name | dump }}
+  criticality: ${{ values.critical }}
+  tags:
+    - airflow
+    - astro
+    - data-platform
+  links:
+    - url: https://www.astronomer.io/docs/astro
+      title: Astro Documentation
+      icon: techdocs
+      type: documentation
+spec:
+  type: service
+  lifecycle: experimental
+  owner: platform
